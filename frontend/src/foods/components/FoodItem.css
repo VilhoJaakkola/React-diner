@@ -1,0 +1,37 @@
+.food-item {
+  margin: 1rem 0;
+}
+
+.food-item__content {
+  padding: 0;
+}
+
+.food-item__info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.food-item__image img {
+  width: 100%;
+  height: 12.5rem;
+  margin-right: 1.5rem;
+}
+
+.food-item__modal-content {
+  padding: 0;
+}
+
+.food-item__modal-actions {
+  text-align: right;
+}
+
+.food-item__actions button,
+.food-item__actions a {
+  margin: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .food.food-item__image {
+    height: 20rem;
+  }
+}

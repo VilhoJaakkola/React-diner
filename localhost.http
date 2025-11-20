@@ -1,0 +1,56 @@
+GET http://localhost:5001/api/foods
+
+###
+
+GET http://localhost:5001/api/foods/1
+
+###
+
+POST http://localhost:5001/api/foods
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ1NWY2MThjLWY4ZTQtNDlhYS1hY2EyLTVjYTc2MmU3MjYzNSIsImVtYWlsIjoiYWRtaW5AdGVzdC5jb20iLCJpYXQiOjE3MzkyMDE1ODEsImV4cCI6MTczOTIwNTE4MX0._GB2lkuCyqatt9IUHc0_jcC0BMlDmCBysluC8YCzYnA 
+
+{
+  "name": "Kebab Aurarulla",
+  "price": 14.99,
+  "description": "Kebab Aurarulla on kebab, jossa on aurajuustoa ja rullattu tortillaan."
+}
+
+###
+
+PUT http://localhost:5001/api/foods/1
+Content-Type: application/json
+
+{
+  "name": "Kebab Riisillä",
+  "price": 12.99,
+  "description": "Kebab Riisillä on kebab, jossa on riisiä.",
+  "image": ""
+}
+
+###
+
+DELETE http://localhost:5001/api/foods/4
+
+###
+
+POST http://localhost:5001/api/users/signup
+Content-Type: application/json
+
+{
+  "name": "matti",
+  "email": "matti@test.com",
+  "password": "matti123",
+  "admin": true
+}
+
+###
+
+POST http://localhost:5001/api/users/login
+Content-Type: application/json
+
+{
+  "name": "admin",
+  "email": "admin@test.com",
+  "password": "admin123"
+}

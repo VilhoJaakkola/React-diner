@@ -1,0 +1,5 @@
+host: 'localhost',       // address of your server
+user: 'postgres',
+password: 'myapp_password',  
+database: 'react_diner'   // database
+port: '5432'            //if not default

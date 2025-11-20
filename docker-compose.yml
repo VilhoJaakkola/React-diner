@@ -1,0 +1,40 @@
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      #POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: myapp_password
+      POSTGRES_DB: react_diner
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: myapp_password
+      DB_NAME: react_diner
+      NODE_ENV: production
+
+volumes:
+  postgres-data:
