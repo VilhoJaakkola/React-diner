@@ -1,34 +1,26 @@
-import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { config } from "../config/config";
+import { FastifyRequest, FastifyReply } from 'fastify';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { config } from '../config/config.js';
 
+export async function verifyToken(req: FastifyRequest, reply: FastifyReply) {
+  if (req.method === 'OPTIONS') return;
 
-const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.method === 'OPTIONS') { next(); }
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return reply.status(401).send({ message: 'Authentication failed: No token provided' });
+  }
 
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return reply.status(401).send({ message: 'Authentication failed: invalid token format' });
+  }
 
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      res.status(401).json({ message: "Authentication failed: No token provided" });
-      return
+    const decoded = jwt.verify(token, config.JWT_KEY) as JwtPayload;
+    if (!decoded?.id) {
+      return reply.status(401).send({ message: 'Authentication failed: invalid token payload' });
     }
-    const token = authHeader.split(' ')[1]; // Convention is 'Bearer TOKEN'
-    if (!token) {
-      res.status(401).json({ message: "Authentication failed: invalid token format" });
-      return
-    }
-
-    const decodedToken = jwt.verify(token, config.JWT_KEY) as JwtPayload;
-    if (!decodedToken || typeof decodedToken !== 'object' || !decodedToken.id) {
-      res.status(401).json({ message: "Authentication failed: invalid token payload" });
-      return
-    }
-    next();
-
-  } catch (error) {
-    res.status(401).json("Authentication failed: ");
+  } catch {
+    return reply.status(401).send({ message: 'Authentication failed' });
   }
 }
-
-export { verifyToken }

@@ -1,13 +1,11 @@
-import express, { Request, Response} from 'express';
-import { getFoods, getFoodById, createFood, updateFood, deleteFood } from '../controllers/foods.controller';
-import { verifyToken } from '../middleware/verifyToken';
+import { FastifyInstance } from 'fastify';
+import { getFoods, getFoodById, createFood, updateFood, deleteFood } from '../controllers/foods.controller.js';
+import { verifyToken } from '../middleware/verifyToken.js';
 
-const router = express.Router();
-
-router.get('/', getFoods);
-router.get('/:id', getFoodById);
-router.post('/', verifyToken, createFood);
-router.put('/:id', verifyToken, updateFood);
-router.delete('/:id', verifyToken, deleteFood);
-
-export default router;
+export default async function foodRoutes(app: FastifyInstance) {
+  app.get('/', getFoods);
+  app.get('/:id', getFoodById);
+  app.post('/', { preHandler: verifyToken }, createFood);
+  app.put('/:id', { preHandler: verifyToken }, updateFood);
+  app.delete('/:id', { preHandler: verifyToken }, deleteFood);
+}
