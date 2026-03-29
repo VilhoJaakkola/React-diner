@@ -1,10 +1,9 @@
 
 services:
-  db:
+  postgres:
     image: postgres:17-alpine
-    restart: unless-stopped
+    restart: no
     environment:
-      #POSTGRES_USER: postgres
       POSTGRES_PASSWORD: myapp_password
       POSTGRES_DB: react_diner
     ports:
@@ -15,26 +14,26 @@ services:
 
   adminer:
     image: adminer
-    restart: unless-stopped
+    restart: no
     ports:
       - 8080:8080
 
-  app:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - 5000:5000
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: myapp_password
-      DB_NAME: react_diner
-      NODE_ENV: production
+  # app:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   ports:
+  #     - 5000:5000
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     DB_HOST: postgres
+  #     DB_PORT: 5432
+  #     DB_USER: postgres
+  #     DB_PASSWORD: myapp_password
+  #     DB_NAME: react_diner
+  #     NODE_ENV: production
 
 volumes:
   postgres-data:

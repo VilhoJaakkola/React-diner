@@ -21,13 +21,11 @@ import EditFood from "./foods/pages/EditFood";
 const queryClient = new QueryClient();
 
 function AppContent() {
-  //use the custom hook to get access to the context
   const { token } = useAuthContext();
 
   let routes;
 
   if (token) {
-    //if token is true, there is a logged in user
     routes = (
       <Switch>
         <Route path="/" exact>
