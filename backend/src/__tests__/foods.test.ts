@@ -1,10 +1,10 @@
 import { describe, expect, test } from "@jest/globals";
 import request from "supertest";
 
-import app from "../app";
-import { FoodCreateRequest } from "../models/foods.model";
+import app from "../app.js";
+import { FoodCreateRequest } from "../models/foods.model.js";
 
-import pool from "../db/db";
+import pool from "../db/db.js";
 
 const loggedInUser = {
   id: '',

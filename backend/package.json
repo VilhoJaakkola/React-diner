@@ -5,15 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "bun src/server.ts",
-    "dev": "nodemon src/server.ts",
-    "dev:bun": "bun --watch src/server.ts",
-    "build": "tsc --project tsconfig.build.json",
+    "dev": "bun --watch src/server.ts",
     "build:bun": "bun build src/server.ts --outdir dist",
     "lint": "eslint src/**",
     "lint:fix": "eslint src/** --fix",
     "format": "prettier --write src/**",
-    "test": "jest --forceExit",
-    "test:bun": "bun test",
+    "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],
