@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --write .",
     "preview": "vite preview",
-    "test:e2e": "npx cypress run"
+    "test:e2e": "bunx cypress run"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
@@ -25,15 +27,24 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/react-router-dom": "^5.3.3",
+    "@types/react-transition-group": "^4.4.12",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
     "@vitejs/plugin-react": "^4.3.4",
     "cypress": "^14.2.0",
     "cypress-vite": "^1.6.0",
     "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-cypress": "^4.2.0",
+    "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.57.2",
     "vite": "^6.2.0"
   }
 }

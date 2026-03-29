@@ -1,4 +1,13 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+main {
+  margin-top: 5rem;
+}
+
+@keyframes lds-dual-ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
 * {
@@ -14,7 +23,6 @@ body {
   background: #fbfbfb;
   color: #1a1a1a;
 }
-
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -36,7 +44,7 @@ body {
 }
 
 html {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -92,7 +100,6 @@ button:focus-visible {
   justify-content: center;
   align-items: center;
 }
-
 
 .slide-in-left-enter {
   transform: translateX(-100%);

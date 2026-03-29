@@ -1,18 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
-import FoodList from "../components/FoodList"
-import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
+import FoodList from '../components/FoodList';
+import LoadingSpinner from '../../shared/LoadingSpinner/LoadingSpinner';
 
-
-import { getFoods } from "../api/foods";
+import { getFoods } from '../api/foods';
 
 const Foods = () => {
   const { status, error, data } = useQuery({
-    queryKey: ["foodsData"],
+    queryKey: ['foodsData'],
     queryFn: () => getFoods(),
   });
 
-  if (status === "pending")
+  if (status === 'pending')
     return (
       <div className="center">
         <LoadingSpinner />

@@ -1,15 +1,15 @@
-import { useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useRef, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
-import { useAuthContext } from "../../shared/context/auth-context";
+import { useAuthContext } from '../../shared/context/auth-context';
 
-import Card from "../../shared/Card/Card";
-import Input from "../../shared/Input/Input";
-import Button from "../../shared/Button/Button";
+import Card from '../../shared/Card/Card';
+import Input from '../../shared/Input/Input';
+import Button from '../../shared/Button/Button';
 
-import { signUpUser, loginUser } from "../api/users";
+import { signUpUser, loginUser } from '../api/users';
 
-import "./Authenticate.css";
+import './Authenticate.css';
 
 const Authenticate = (props) => {
   const nameRef = useRef();
@@ -23,22 +23,21 @@ const Authenticate = (props) => {
     setLoginMode((prevMode) => !prevMode);
   };
 
-  
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault();
     if (isLoginMode) {
       loginUserMutation.mutate({
         email: emailRef.current.value,
-        password: passwordRef.current.value
-      })
+        password: passwordRef.current.value,
+      });
     } else {
       signUpUserMutation.mutate({
         name: nameRef.current.value,
         email: emailRef.current.value,
-        password: passwordRef.current.value
-      })
+        password: passwordRef.current.value,
+      });
     }
-  }
+  };
 
   const signUpUserMutation = useMutation({
     mutationFn: signUpUser,
@@ -46,7 +45,7 @@ const Authenticate = (props) => {
       // Will execute only once, for the last mutation,
       // regardless which mutation resolves first
       console.log(data);
-      login(data.id, data.token)
+      login(data.id, data.token);
     },
     onError: (error) => {
       // An error happened!
@@ -54,28 +53,26 @@ const Authenticate = (props) => {
     },
   });
 
- const loginUserMutation = useMutation({
-  mutationFn: loginUser, 
-  onSuccess: (data) => {
-    // Will execute only once, for the last mutation,
-    // regardless which mutation resolves first
-    console.log(data);
-    login(data.id, data.token)
-  },
-  onError: (error) => {
-    // An error happened!
-    console.log(error);
-  }
-});
+  const loginUserMutation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (data) => {
+      // Will execute only once, for the last mutation,
+      // regardless which mutation resolves first
+      console.log(data);
+      login(data.id, data.token);
+    },
+    onError: (error) => {
+      // An error happened!
+      console.log(error);
+    },
+  });
 
   return (
     <Card className="authentication">
       {!isLoginMode && <h2>Sign Up</h2>}
       {isLoginMode && <h2>Login</h2>}
       <form onSubmit={onSubmitHandler}>
-        {!isLoginMode && (
-          <Input id="name" ref={nameRef} type="text" label="Name" />
-        )}
+        {!isLoginMode && <Input id="name" ref={nameRef} type="text" label="Name" />}
         <Input data-cy="email" id="email" ref={emailRef} type="text" label="Email" />
         <Input
           data-cy="password"
@@ -86,11 +83,11 @@ const Authenticate = (props) => {
         />
 
         <Button data-cy="login" type="submit" disable={signUpUserMutation.isLoading}>
-          {isLoginMode ? "LOGIN" : "SIGNUP"}
+          {isLoginMode ? 'LOGIN' : 'SIGNUP'}
         </Button>
       </form>
       <Button data-cy="singUpInstead" inverse onClick={switchModeHandler}>
-        {isLoginMode ? "SignUp" : "Login"} instead?
+        {isLoginMode ? 'SignUp' : 'Login'} instead?
       </Button>
     </Card>
   );

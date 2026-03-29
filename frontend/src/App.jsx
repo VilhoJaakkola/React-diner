@@ -1,22 +1,17 @@
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Foods from "./foods/pages/Foods";
-import AddFood from "./foods/pages/AddFood";
-import Users from "./users/pages/Users";
-import Authenticate from "./users/pages/Authenticate";
-import MainNavigation from "./shared/MainNavigation/MainNavigation";
+import Foods from './foods/pages/Foods';
+import AddFood from './foods/pages/AddFood';
+import Users from './users/pages/Users';
+import Authenticate from './users/pages/Authenticate';
+import MainNavigation from './shared/MainNavigation/MainNavigation';
 
-import { AuthContextProvider } from "./shared/context/AuthContextProvider";
-import { useAuthContext } from "./shared/context/auth-context";
+import { AuthContextProvider } from './shared/context/AuthContextProvider';
+import { useAuthContext } from './shared/context/auth-context';
 
-import "./App.css";
-import EditFood from "./foods/pages/EditFood";
+import './App.css';
+import EditFood from './foods/pages/EditFood';
 
 const queryClient = new QueryClient();
 

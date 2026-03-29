@@ -1,18 +1,18 @@
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
-import { config } from "../../config/config";
-import { useAuthContext } from "../../shared/context/auth-context";
+import { config } from '../../config/config';
+import { useAuthContext } from '../../shared/context/auth-context';
 
-import Modal from "../../shared/Modal/Modal";
-import Card from "../../shared/Card/Card";
-import Button from "../../shared/Button/Button";
-import { deleteFood } from "../api/foods";
+import Modal from '../../shared/Modal/Modal';
+import Card from '../../shared/Card/Card';
+import Button from '../../shared/Button/Button';
+import { deleteFood } from '../api/foods';
 
-import "./FoodItem.css";
+import './FoodItem.css';
 
-const FoodItem = props => {
+const FoodItem = (props) => {
   const history = useHistory();
   const { isLoggedIn, token } = useAuthContext();
 
@@ -23,18 +23,18 @@ const FoodItem = props => {
   const deleteFoodMutation = useMutation({
     mutationFn: deleteFood,
     onSuccess: (data) => {
-      console.log(data);      
+      console.log(data);
     },
     onError: (error) => {
       console.log(error);
-      alert("Failed to delete food");
-    }
+      alert('Failed to delete food');
+    },
   });
 
   const deleteConfirmedHandler = () => {
     setShowConfirmModal(false);
     deleteFoodMutation.mutate({ id: props.id, token });
-  }
+  };
 
   const handleEdit = () => {
     history.push(`/foods/edit/${props.id}`);
@@ -54,16 +54,21 @@ const FoodItem = props => {
           </div>
           {isLoggedIn && (
             <div className="food-item__actions">
-              <Button onClick={handleEdit} data-cy="edit">Edit</Button>
-              <Button danger onClick={showConfirmationHandler}>Delete</Button>
+              <Button onClick={handleEdit} data-cy="edit">
+                Edit
+              </Button>
+              <Button danger onClick={showConfirmationHandler}>
+                Delete
+              </Button>
             </div>
           )}
         </Card>
       </li>
       <Modal
         show={showConfirmModal}
-        header="Are you sure?" footerClass="place-item__modal-actions" footer=
-        {
+        header="Are you sure?"
+        footerClass="place-item__modal-actions"
+        footer={
           <>
             <Button inverse onClick={cancelConfirmationHandler}>
               Cancel
@@ -73,8 +78,8 @@ const FoodItem = props => {
             </Button>
           </>
         }
-        >
-          <p>Are you sure? Once it's gone, it's gone!</p>
+      >
+        <p>Are you sure? Once it's gone, it's gone!</p>
       </Modal>
     </>
   );

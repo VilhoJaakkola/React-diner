@@ -3,12 +3,11 @@ import UserItem from './UserItem';
 
 import './UsersList.css';
 
-const UsersList = props => {
+const UsersList = (props) => {
   return (
     <ul className="users-list">
-
-      {props.items.map(user => (
-        <UserItem 
+      {props.items.map((user) => (
+        <UserItem
           key={user.id}
           id={user.id}
           name={user.name}
@@ -17,7 +16,7 @@ const UsersList = props => {
         />
       ))}
     </ul>
-  )
-}
+  );
+};
 
 export default UsersList;

@@ -1,13 +1,13 @@
-import { useRef } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useHistory } from "react-router-dom";
+import { useRef } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useHistory } from 'react-router-dom';
 
-import Input from "../../shared/Input/Input";
-import Button from "../../shared/Button/Button";
-import { createFood } from "../api/foods";
-import { useAuthContext } from "../../shared/context/auth-context";
+import Input from '../../shared/Input/Input';
+import Button from '../../shared/Button/Button';
+import { createFood } from '../api/foods';
+import { useAuthContext } from '../../shared/context/auth-context';
 
-import "./AddFood.css";
+import './AddFood.css';
 
 const AddFood = () => {
   const { token } = useAuthContext();
@@ -24,8 +24,7 @@ const AddFood = () => {
     mutationFn: createFood,
     onSuccess: (response) => {
       console.log(response);
-      queryClient.invalidateQueries("foodsData");      
-
+      queryClient.invalidateQueries('foodsData');
     },
     onError: (error) => {
       console.log(error);
@@ -36,7 +35,7 @@ const AddFood = () => {
     event.preventDefault();
     const priceValue = parseFloat(priceRef.current.value);
     if (isNaN(priceValue)) {
-      alert("Please enter a valid number for the price.");
+      alert('Please enter a valid number for the price.');
       return;
     }
 
@@ -46,22 +45,19 @@ const AddFood = () => {
       description: descriptionRef.current.value,
       image: imageRef.current.value,
       token: token,
-    })
-    history.push("/");
+    });
+    history.push('/');
   };
 
   return (
-    <form className="food-form" onSubmit={foodSubmitHandler}> 
+    <form className="food-form" onSubmit={foodSubmitHandler}>
       <Input id="name" ref={nameRef} type="text" label="Name"></Input>
       <Input id="price" ref={priceRef} type="text" label="Price"></Input>
       <Input id="description" ref={descriptionRef} type="text" label="Description"></Input>
       <Input id="image" ref={imageRef} type="text" label="Image filename"></Input>
-      <Button type="submit">
-        Add Food
-      </Button>
+      <Button type="submit">Add Food</Button>
     </form>
-  )
-
+  );
 };
 
 export default AddFood;
