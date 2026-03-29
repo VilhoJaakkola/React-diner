@@ -1,9 +1,7 @@
-import express from "express";
-import { signUpUser, loginUser } from "../controllers/users.controller";
+import { FastifyInstance } from 'fastify';
+import { signUpUser, loginUser } from '../controllers/users.controller.js';
 
-const router = express.Router();
-
-router.post('/signup', signUpUser);
-router.post('/login', loginUser);
-
-export default router;
+export default async function userRoutes(app: FastifyInstance) {
+  app.post('/signup', signUpUser);
+  app.post('/login', loginUser);
+}

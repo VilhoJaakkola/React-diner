@@ -1,82 +1,90 @@
-import { Request, Response, NextFunction } from 'express';
-import { ctrlGetFoods, ctrlGetFoodById, ctrlCreateFood, ctrlUpdateFood, ctrlDeleteFood } from '../services/foods.service';
-import { foodCreateRequestSchema } from '../models/foods.model';
-import { verifyToken } from '../middleware/verifyToken';
+import { FastifyRequest, FastifyReply } from 'fastify';
+import {
+  ctrlGetFoods,
+  ctrlGetFoodById,
+  ctrlCreateFood,
+  ctrlUpdateFood,
+  ctrlDeleteFood,
+} from '../services/foods.service.js';
+import { foodCreateRequestSchema } from '../models/foods.model.js';
 
-const getFoods = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const getFoods = async (_request: FastifyRequest, reply: FastifyReply): Promise<void> => {
   try {
     const foods = await ctrlGetFoods();
-    res.status(200).json(foods);
+    reply.status(200).send(foods);
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred while fetching foods' });
+    reply.status(500).send({ message: 'An error occurred while fetching foods' });
   }
 };
 
-const getFoodById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const getFoodById = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+): Promise<void> => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(request.params.id);
     const food = await ctrlGetFoodById(id);
     if (!food) {
-      res.status(404).json({ message: 'Food not found' }); // when hungry and haven't gone grocery shopping
+      reply.status(404).send({ message: 'Food not found' }); // when hungry and haven't gone grocery shopping
       return;
     }
-    res.json(food);
+    reply.send(food);
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred while fetching food' });
+    reply.status(500).send({ message: 'An error occurred while fetching food' });
   }
-}
+};
 
-const createFood = async (req: Request, res: Response, next: NextFunction): Promise<void> => { // If it were so easy...
+const createFood = async (request: FastifyRequest, reply: FastifyReply): Promise<void> => { // If it were so easy...
   try {
-    const validatedFood = foodCreateRequestSchema.parse(req.body);
+    const validatedFood = foodCreateRequestSchema.parse(request.body);
     const data = await ctrlCreateFood(validatedFood);
-    res.status(201).json(data);
+    reply.status(201).send(data);
   } catch (error) {
     if (error instanceof Error && 'errors' in error) {
-      res.status(400).json({ message: 'Missing a required value', error: error.errors});
+      reply.status(400).send({ message: 'Missing a required value', error: (error as any).errors });
       return;
     }
-    res.status(500).json({ message: 'An error occurred while creating food' });
+    reply.status(500).send({ message: 'An error occurred while creating food' });
   }
-}
+};
 
-const updateFood = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const updateFood = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+): Promise<void> => {
   try {
-    const id = parseInt(req.params.id);
-    const food = req.body;
+    const id = parseInt(request.params.id);
+    const food = request.body;
     const updatedFood = await ctrlUpdateFood(id, food);
     if (!updatedFood) {
-      res.status(404).json({ message: 'Food not found' });
+      reply.status(404).send({ message: 'Food not found' });
       return;
     }
-    res.status(200).json(updatedFood);
+    reply.status(200).send(updatedFood);
   } catch (error) {
-    if(error instanceof Error && 'errors' in error) {
-      res.status(400).json({ message: 'Missing a required value' });
+    if (error instanceof Error && 'errors' in error) {
+      reply.status(400).send({ message: 'Missing a required value' });
       return;
     }
-    res.status(500).json({ message: 'An error occurred while updating food' });
+    reply.status(500).send({ message: 'An error occurred while updating food' });
   }
-}
+};
 
-const deleteFood = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const deleteFood = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply,
+): Promise<void> => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(request.params.id);
     const deletedFood = await ctrlDeleteFood(id);
     if (!deletedFood) {
-      res.status(404).json({ message: 'Food not found' });
+      reply.status(404).send({ message: 'Food not found' });
       return;
     }
-    res.status(200).json(deletedFood);
+    reply.status(200).send(deletedFood);
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred while deleting food' });
+    reply.status(500).send({ message: 'An error occurred while deleting food' });
   }
-}
-
-export {
-  getFoods,
-  getFoodById,
-  createFood,
-  updateFood,
-  deleteFood
 };
+
+export { getFoods, getFoodById, createFood, updateFood, deleteFood };
